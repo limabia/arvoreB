@@ -1,0 +1,15 @@
+insere 30
+insere 40
+imprime
+insere 50
+insere 60
+remove 20
+remove 40
+remove 30
+imprime
+insere 20
+insere 40
+insere 15
+remove 15
+imprime
+fim
