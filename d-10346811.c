@@ -3,7 +3,6 @@
 // Created by bianca on 26/05/18.
 // objetivo: inserção, remoção e impressão de arvore B/ Btree
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <float.h>
@@ -22,75 +21,64 @@ typedef struct no_arvoreB{
 
 // retorna a posicao que o elemento esta na arvore ou que deve ser inserido
 // TODO implementar
-int buscabinaria(no_arvoreB *raiz, int valor){
-    return 1;
+int buscaBinaria(NO_ARVOREB *no, int valor){
+    int inicio, fim, meio;
+    
+    if (no->nchaves == 0) {
+        return 0;
+    }
+
+    inicio = 0;
+    fim = no->nchaves - 1;
+    
+    while(inicio < fim) {
+        meio = (inicio + fim) / 2;
+        
+        if(valor > no->chaves[meio]){
+            inicio = meio + 1;
+        } else if(valor < no->chaves[meio]) {
+            fim = meio - 1;
+        }
+        else { 
+            return meio; 
+        }
+    }
+    return inicio;
 }
 
-// TODO arrumar esses parametros aqui que tao uma loucura
-void insereChave(NO_ARVOREB *raiz, int chave, NO_ARVOREB *filhoDireita) {
-    int i = nchaves;
-    while(no->chaves[i-1] > chave){
+void insereChave(NO_ARVOREB *no, int valor, NO_ARVOREB *filho) {
+    int i = no->nchaves;
+
+    while(no->chaves[i-1] > valor){
         no->chaves[i] =no->chaves[i-1];
         no->filhos[i+1] = no->chaves[i];
         i--;
     }
-    no->chaves[i] = chave;
-    no->filhos[i+1] = no->filhos[i];
-    nchaves ++;
+    no->chaves[i] = valor;
+    no->filhos[i+1] = filho;
+    no->nchaves ++;
 }
 
-bool insercao(NO_ARVOREB *raiz, int valor, bool *estaNaFolha, int *chaveRetorno){
-    int i, j, pos, meio;
-    no_arvoreB *temp, *filhoDireita;
-
-    // nao existe raiz
-    if (raiz == NULL) {
-        *estaNaFolha = true;
-        *chaveRetorno = c;
-        return false;
+bool insereRec(NO_ARVOREB *no, int valor, int *chavePromovida){
+    if (no == NULL) {
+        *chavePromovida = valor;
+        return true;
     }
-    else {
-        pos = buscabinaria(raiz, c);
-        if (raiz ->chaves[pos] == c){
-            printf("chave ja existe na arvore");
-            *estaNaFolha = false;
+    int posicao = buscaBinaria(no, valor);
+    int novaChavePromovida;
+    bool houvePromocao = insereRec(no->filhos[posicao], valor, &novaChavePromovida);
+    if( houvePromocao){
+        if (no->nchaves < MAX) {
+            insereChave(no, valor, NULL);
         }
-        else{
-            filhoDireita = insere( raiz->filhos[pos], c, estaNaFolha, chaveRetorno);
 
-            if( *estaNaFolha && (raiz ->nchaves < MAX)){
-                insereChave(raiz, *chaveRetorno, filhoDireita);
-                *estaNaFolha = false;
-            } else {
-                temp = (NO_ARVOREB*)malloc(sizeof(NO_ARVOREB));
-                temp->nchaves = 0;
-
-                for( i=0; i < MAX+1; i++){
-                    temp->filhos[i] = NULL;
-                }
-
-                int l = (int)MAX/2;
-                meio = raiz->chaves[l];
-
-                for(i = l+1; i < MAX; i++){
-                    insereChave(tmp, raiz->chaves[i], raiz->filhos[i+1]);
-                    raiz->chaves[i] = 0;
-                    raiz->filhos[i+1] = NULL;
-                }
-
-                raiz->nchaves = l;
-
-                if(pos <= l){
-                    insereChave(raiz, *chaveRetorno, filhoDireita);
-                } else{
-                    insereChave(temp, *chaveRetorno, filhoDireita);
-                }
-                *chaveRetorno = meio;
-                return tue;
-            }
-        }
     }
     return false;
+}
+
+void insercao(NO_ARVOREB *no, int valor){
+    int chavePromovida = 0;
+    bool promove = insereRec(no, valor, chavePromovida);
 }
 
 // TODO ajustar pra retornar um array com as chaves em ordem
@@ -113,7 +101,7 @@ bool remocao(int valor){
 }
 
 // coloca em um arquivo saida.txt a arvore que existe no momento de sua execucao
-bool fim(){
+void fim(){
     return false;
 }
 
@@ -129,34 +117,37 @@ bool leEntrada(char *nomeEntrada){
         printf("Arquivo invalido");
         return false;
     }
+
     char comando[20];
     int valor;
 
+    NO_ARVOREB * no = (NO_ARVOREB *) malloc(sizeof(NO_ARVOREB));
+
     // TODO colocar isso dentro de um for pra ler todas as linhas do arquivo
+    while(fscanf(entrada, "%s", comando)) {
         fscanf(entrada, "%s %d", comando, &valor);
         printf("%s \n ", comando);
 
-        bool operacao;
-
         if (strcmp (comando, "insere") == 0){
             printf("insere");
-            operacao = insercao(valor);
+            insercao(*no, valor);
         }
         else if (strcmp (comando, "imprime") == 0){
             printf("imprime");
-            impressao();
+            impressao(no);
         }
         else if (strcmp (comando, "remove") == 0){
             printf("remove");
-            operacao = remocao(valor);
+            remocao(valor);
         }
         else if (strcmp (comando, "fim") == 0){
             printf("fim");
-            operacao = fim();
+            fim();
         }
         else {
             printf("linha invalida");
         }
+    }
 
     fclose(entrada);
 
