@@ -48,13 +48,12 @@ int buscaBinaria(NO_ARVOREB *no, int valor){
 // TODO ajustar pra retornar um array com as chaves em ordem pra usar na func fim
 void impressao(NO_ARVOREB *no){
     if(no == NULL){
-        printf("\n");
         return;
     }
     int i;
     for(i=0; i < no->nchaves; i++){
         impressao(no->filhos[i]);
-        printf("-> %d ", no->chaves[i]);
+        printf("-> %d \n", no->chaves[i]);
     }
     impressao(no->filhos[no->nchaves]);
 }
@@ -63,7 +62,7 @@ void impressao(NO_ARVOREB *no){
 void insereChave(NO_ARVOREB *no, int valor, NO_ARVOREB *filho) {
     int i = no->nchaves;
 
-    while(no->chaves[i-1] > valor){
+    while(no->chaves[i-1] > valor && i > 0){
         no->chaves[i] =no->chaves[i-1];
         no->filhos[i+1] = no->filhos[i];
         i--;
@@ -84,11 +83,10 @@ bool insereRec(NO_ARVOREB *no, int valor, int *chavePromovida){
     NO_ARVOREB *filho = NULL;
 
     bool houvePromocao = insereRec(no->filhos[posicao], valor, &novaChavePromovida);
-    if( houvePromocao){
+    if (houvePromocao) {
         if (no->nchaves < MAX) {
             insereChave(no, valor, filho);
         }
-
     }
     return false;
 }

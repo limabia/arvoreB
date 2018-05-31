@@ -13,7 +13,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/d-10346811" beforeDir="false" afterPath="$PROJECT_DIR$/d-10346811" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/d-10346811.c" beforeDir="false" afterPath="$PROJECT_DIR$/d-10346811.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/entrada.txt" beforeDir="false" afterPath="$PROJECT_DIR$/entrada.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,8 +26,8 @@
       <file leaf-file-name="d-10346811.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/d-10346811.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="44" column="18" lean-forward="true" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
+            <state relative-caret-position="328">
+              <caret line="88" column="9" lean-forward="true" selection-start-line="88" selection-start-column="9" selection-end-line="88" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -79,8 +78,8 @@
       <list>
         <option value="$PROJECT_DIR$/../algoritmoDePrim/d-10346811.c" />
         <option value="$USER_HOME$/Downloads/ep3.c" />
-        <option value="$PROJECT_DIR$/d-10346811.c" />
         <option value="$PROJECT_DIR$/entrada.txt" />
+        <option value="$PROJECT_DIR$/d-10346811.c" />
       </list>
     </option>
   </component>
@@ -149,12 +148,12 @@
       <workItem from="1527373782087" duration="8014000" />
       <workItem from="1527383839110" duration="9521000" />
       <workItem from="1527643912410" duration="611000" />
-      <workItem from="1527792266300" duration="7030000" />
+      <workItem from="1527792266300" duration="8747000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25176000" />
+    <option name="totallyTimeSpent" value="26893000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
@@ -271,8 +270,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/d-10346811.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="44" column="18" lean-forward="true" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
+        <state relative-caret-position="328">
+          <caret line="88" column="9" lean-forward="true" selection-start-line="88" selection-start-column="9" selection-end-line="88" selection-end-column="9" />
         </state>
       </provider>
     </entry>
