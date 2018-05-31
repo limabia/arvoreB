@@ -10,8 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21f49094-bb9d-4c07-98fe-8d3cf4426273" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/d-10346811" beforeDir="false" afterPath="$PROJECT_DIR$/d-10346811" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/d-10346811.c" beforeDir="false" afterPath="$PROJECT_DIR$/d-10346811.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entrada.txt" beforeDir="false" afterPath="$PROJECT_DIR$/entrada.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,17 +27,8 @@
       <file leaf-file-name="d-10346811.c" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/d-10346811.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="522">
-              <caret line="162" column="16" lean-forward="true" selection-start-line="162" selection-start-column="16" selection-end-line="162" selection-end-column="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="d-10346811.c" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../algoritmoDePrim/d-10346811.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="44" column="49" lean-forward="true" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="49" />
+            <state relative-caret-position="215">
+              <caret line="44" column="18" lean-forward="true" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -43,8 +36,8 @@
       <file leaf-file-name="entrada.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/entrada.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="6" selection-start-line="6" selection-end-line="6" selection-end-column="6" />
+            <state relative-caret-position="135">
+              <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -53,14 +46,29 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>leEntrada</find>
       <find>filhas</find>
-      <find>h</find>
       <find>h</find>
       <find>m</find>
       <find>int m</find>
-      <find>m</find>
+      <find>no-.</find>
+      <find>filhos</find>
+      <find>no-&gt;filhos[i+1] = no-&gt;chaves[i];</find>
+      <find>no-&gt;filhos[i+1]</find>
+      <find>inserirChave</find>
+      <find>insereChave</find>
+      <find>filhoDireita</find>
+      <find>imprim</find>
+      <find>fim</find>
+      <find>insereRec</find>
+      <find>while</find>
+      <find>busca</find>
+      <find>str</find>
+      <find>nao existem</find>
+      <find>imprimir</find>
       <find>impressao</find>
+      <find>print</find>
+      <find>executou</find>
+      <find>leEntrada</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -70,8 +78,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/../algoritmoDePrim/d-10346811.c" />
-        <option value="$PROJECT_DIR$/entrada.txt" />
+        <option value="$USER_HOME$/Downloads/ep3.c" />
         <option value="$PROJECT_DIR$/d-10346811.c" />
+        <option value="$PROJECT_DIR$/entrada.txt" />
       </list>
     </option>
   </component>
@@ -95,6 +104,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -106,12 +116,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../algoritmoDePrim/d-10346811.c" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/ep3.c" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -138,20 +147,23 @@
       <option name="presentableId" value="Default" />
       <updated>1527373780220</updated>
       <workItem from="1527373782087" duration="8014000" />
-      <workItem from="1527383839110" duration="8917000" />
+      <workItem from="1527383839110" duration="9521000" />
+      <workItem from="1527643912410" duration="611000" />
+      <workItem from="1527792266300" duration="7030000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16931000" />
+    <option name="totallyTimeSpent" value="25176000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24596465" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.24596465" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -164,7 +176,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -174,6 +185,48 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/d-10346811.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2145">
+          <caret line="143" column="9" lean-forward="true" selection-start-line="143" selection-start-column="9" selection-end-line="143" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../algoritmoDePrim/d-10346811.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="44" column="49" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entrada.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="6" selection-start-line="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d-10346811.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1995">
+          <caret line="133" lean-forward="true" selection-start-line="133" selection-end-line="133" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../algoritmoDePrim/d-10346811.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="44" column="49" lean-forward="true" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entrada.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="6" selection-start-line="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/d-10346811.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="495">
@@ -195,24 +248,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/entrada.txt">
+    <entry file="file://$PROJECT_DIR$/../algoritmoDePrim/d-10346811.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="6" selection-start-line="6" selection-end-line="6" selection-end-column="6" />
+        <state relative-caret-position="459">
+          <caret line="46" column="5" lean-forward="true" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../algoritmoDePrim/d-10346811.c">
+    <entry file="file://$USER_HOME$/Downloads/ep3.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="44" column="49" lean-forward="true" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="49" />
+        <state relative-caret-position="284">
+          <caret line="179" selection-start-line="179" selection-end-line="190" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entrada.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d-10346811.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="162" column="16" lean-forward="true" selection-start-line="162" selection-start-column="16" selection-end-line="162" selection-end-column="16" />
+        <state relative-caret-position="215">
+          <caret line="44" column="18" lean-forward="true" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
         </state>
       </provider>
     </entry>

@@ -3,6 +3,8 @@ insere 40
 imprime
 insere 50
 insere 60
+insere 55
+insere 66
 remove 20
 remove 40
 remove 30
