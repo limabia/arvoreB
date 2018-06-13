@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <float.h>
 #include <string.h>
+
 #define true 1
 #define false 0
 #define MAX 4
@@ -14,100 +15,169 @@
 typedef int bool;
 
 // estrutura de no da arvore B
-typedef struct no_arvoreB{
+typedef struct no_arvoreB {
     int nchaves;
     int chaves[MAX];
-    struct no_arvoreB *filhos[MAX+1];
+    struct no_arvoreB *filhos[MAX + 1];
 } NO_ARVOREB;
 
 // retorna a posicao que o elemento esta na arvore ou que deve ser inserido
-int buscaBinaria(NO_ARVOREB *no, int valor){
+int buscaBinaria(NO_ARVOREB *no, int valor) {
     int inicio, fim, meio;
-    
+
     if (no->nchaves == 0) {
         return 0;
     }
 
     inicio = 0;
     fim = no->nchaves - 1;
-    
+
     while (inicio < fim) {
-        meio = (inicio + fim)/2;
-        
-        if (valor > no->chaves[meio]){
-            inicio = meio+1;
+        meio = (inicio + fim) / 2;
+
+        if (valor > no->chaves[meio]) {
+            inicio = meio + 1;
         } else if (valor < no->chaves[meio]) {
-            fim = meio-1;
+            fim = meio - 1;
         } else {
-            return meio; 
+            return meio;
         }
     }
     return inicio;
 }
 
 // TODO ajustar pra retornar um array com as chaves em ordem pra usar na func fim
-void impressao(NO_ARVOREB *no){
-    if(no == NULL){
+void impressao(NO_ARVOREB *no, int nivel) {
+    if (no == NULL) {
         return;
     }
     int i;
-    for(i=0; i < no->nchaves; i++){
-        impressao(no->filhos[i]);
+    for (i = 0; i < no->nchaves; i++) {
+        impressao(no->filhos[i], nivel + 1);
+        for (int j=0; j<nivel; j++) {
+            printf("  ");
+        }
         printf("-> %d \n", no->chaves[i]);
     }
-    impressao(no->filhos[no->nchaves]);
+    impressao(no->filhos[no->nchaves], nivel + 1);
 }
 
 // insercao da chave (valor) dado que o no correto ja foi encontrado
 void insereChave(NO_ARVOREB *no, int valor, NO_ARVOREB *filho) {
     int i = no->nchaves;
 
-    while(no->chaves[i-1] > valor && i > 0){
-        no->chaves[i] =no->chaves[i-1];
-        no->filhos[i+1] = no->filhos[i];
+    while (no->chaves[i - 1] > valor && i > 0) {
+        no->chaves[i] = no->chaves[i - 1];
+        no->filhos[i + 1] = no->filhos[i];
         i--;
     }
     no->chaves[i] = valor;
-    no->filhos[i+1] = filho;
-    no->nchaves ++;
+    no->filhos[i + 1] = filho;
+    no->nchaves++;
 }
 
+
+void split(NO_ARVOREB *no, int valor, int posicao, int *chavePromovida, NO_ARVOREB **filho) {
+    // grava todas chaves num array temporario pra facilitar o split
+    int chaves[MAX + 1];
+    NO_ARVOREB *filhos[MAX + 2];
+    int i;
+
+    for (i = 0; i < posicao; i++) {
+        chaves[i] = no->chaves[i];
+        filhos[i] = no->filhos[i];
+    }
+    filhos[i] = no->filhos[i];
+    filhos[i + 1] = *filho;
+
+    chaves[posicao] = valor;
+    for (i = posicao; i < MAX; i++) {
+        chaves[i + 1] = no->chaves[i];
+        filhos[i + 2] = no->filhos[i + 1];
+    }
+
+    // limpa o no
+    no->nchaves = MAX / 2;
+    for (i = MAX / 2; i < MAX; i++) {
+        no->chaves[i] = 0;
+        no->filhos[i] = NULL;
+    }
+    no->filhos[MAX] = NULL;
+
+    // aloca o filho
+    *filho = malloc(sizeof(NO_ARVOREB));
+    (*filho)->nchaves = MAX / 2;
+    (*filho)->filhos[0] = filhos[MAX / 2 + 1];
+    for (i = 0; i < MAX / 2; i++) {
+        (*filho)->chaves[i] = chaves[MAX / 2 + i + 1];
+        (*filho)->filhos[i + 1] = filhos[MAX / 2 + i + 1];
+    }
+
+    // promove a chave do meio
+    *chavePromovida = chaves[MAX / 2];
+}
+
+
 // encontra a posicao que a chave deve ser inserido
-bool insereRec(NO_ARVOREB *no, int valor, int *chavePromovida){
+// retorna true caso inseriu corretamente, false caso houve promocao
+bool insereRec(NO_ARVOREB *no, int valor, int *chavePromovida, NO_ARVOREB **filho) {
     if (no == NULL) {
         *chavePromovida = valor;
-        return true;
+        return false;
     }
-    int posicao = buscaBinaria(no, valor);
-    int novaChavePromovida;
-    NO_ARVOREB *filho = NULL;
 
-    bool houvePromocao = insereRec(no->filhos[posicao], valor, &novaChavePromovida);
-    if (houvePromocao) {
+    int posicao = buscaBinaria(no, valor);
+
+
+    bool inseriu = insereRec(no->filhos[posicao], valor, chavePromovida, filho);
+    if (inseriu) {
+        // chave já foi inserida
+        return true;
+    } else {
+        // chave foi promovida e deve ser inserida caso haja espaco ou fazer split caso contrario
+
         if (no->nchaves < MAX) {
-            insereChave(no, valor, filho);
+            // existe espaco, entao insere
+            insereChave(no, *chavePromovida, *filho);
+            return true;
+        } else {
+            // nao ha espaco suficiente, necessario um split
+            split(no, *chavePromovida, posicao, chavePromovida, filho);
+            return false;
         }
+
     }
-    return false;
 }
 
 // cuida de promocoes
-void insercao(NO_ARVOREB *no, int valor){
+void insercao(NO_ARVOREB **no, int valor) {
     int chavePromovida = 0;
-    bool promove = insereRec(no, valor, &chavePromovida);
+    NO_ARVOREB *filho = NULL;
+    bool inseriu = insereRec(*no, valor, &chavePromovida, &filho);
+
+    // se nao inseriu, houve promocao
+    if (!inseriu) {
+        NO_ARVOREB *novaRaiz = malloc(sizeof(NO_ARVOREB));
+        novaRaiz->nchaves = 1;
+        novaRaiz->chaves[0] = chavePromovida;
+        novaRaiz->filhos[0] = *no;
+        novaRaiz->filhos[1] = filho;
+
+        *no = novaRaiz;
+    }
 }
 
 // remove o elemento da arvore B
-bool remocao(int valor){
+bool remocao(int valor) {
     return false;
 }
 
 // coloca em um arquivo saida.txt a arvore que existe no momento de sua execucao
-void fim(){
+void fim() {
     return;
 }
 
-void leEntrada(char *nomeEntrada){
+void leEntrada(char *nomeEntrada) {
 
     printf("%s \n", nomeEntrada);
 
@@ -115,7 +185,7 @@ void leEntrada(char *nomeEntrada){
 
     entrada = fopen(nomeEntrada, "r");
     // verifica se existe conteudo no arquivo
-    if (entrada == NULL){
+    if (entrada == NULL) {
         printf("Arquivo invalido\n");
         return;
     }
@@ -123,29 +193,25 @@ void leEntrada(char *nomeEntrada){
     char comando[20];
     int valor;
 
-    NO_ARVOREB * no = (NO_ARVOREB *) malloc(sizeof(NO_ARVOREB));
+    NO_ARVOREB *no = (NO_ARVOREB *) malloc(sizeof(NO_ARVOREB));
 
-    while(fscanf(entrada, "%s %d", comando, &valor) != EOF) {
+    while (fscanf(entrada, "%s %d", comando, &valor) != EOF) {
 
         //printf("%s %d \n ", comando, valor);
 
-        if (strcmp (comando, "insere") == 0){
+        if (strcmp(comando, "insere") == 0) {
             printf("entrou no if inserir\n");
-            insercao(no, valor);
-        }
-        else if (strcmp (comando, "imprime") == 0){
+            insercao(&no, valor);
+        } else if (strcmp(comando, "imprime") == 0) {
             printf("entrou no if da impressao \n");
-            impressao(no);
-        }
-        else if (strcmp (comando, "remove") == 0){
+            impressao(no, 0);
+        } else if (strcmp(comando, "remove") == 0) {
             //printf("remove \n");
             //remocao(valor);
-        }
-        else if (strcmp (comando, "fim") == 0){
+        } else if (strcmp(comando, "fim") == 0) {
             //printf("fim \n");
             //fim();
-        }
-        else {
+        } else {
             //printf("linha invalida \n");
         }
     }
