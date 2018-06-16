@@ -1,0 +1,22 @@
+insere 1
+insere 12
+insere 8
+insere 2
+insere 25
+insere 6
+insere 14
+insere 28
+insere 17
+insere 7
+insere 52
+insere 16
+insere 48
+insere 68
+insere 3
+insere 26
+insere 29
+insere 53
+insere 55
+insere 45
+imprime
+fim

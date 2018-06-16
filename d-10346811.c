@@ -32,15 +32,15 @@ int buscaBinaria(NO_ARVOREB *no, int valor) {
     inicio = 0;
     fim = no->nchaves - 1;
 
-    while (inicio < fim) {
+    while (inicio <= fim) {
         meio = (inicio + fim) / 2;
 
-        if (valor > no->chaves[meio]) {
-            inicio = meio + 1;
+        if (valor == no->chaves[meio]) {
+            return meio;
         } else if (valor < no->chaves[meio]) {
             fim = meio - 1;
         } else {
-            return meio;
+            inicio = meio + 1;
         }
     }
     return inicio;
@@ -55,9 +55,9 @@ void impressao(NO_ARVOREB *no, int nivel) {
     for (i = 0; i < no->nchaves; i++) {
         impressao(no->filhos[i], nivel + 1);
         for (int j=0; j<nivel; j++) {
-            printf("  ");
+            printf("    ");
         }
-        printf("-> %d \n", no->chaves[i]);
+        printf("%d \n", no->chaves[i]);
     }
     impressao(no->filhos[no->nchaves], nivel + 1);
 }
@@ -106,11 +106,17 @@ void split(NO_ARVOREB *no, int valor, int posicao, int *chavePromovida, NO_ARVOR
 
     // aloca o filho
     *filho = malloc(sizeof(NO_ARVOREB));
+
+    // grava as chaves e os filhos nos nos corretos
+    no->filhos[MAX / 2] = filhos[MAX / 2];
     (*filho)->nchaves = MAX / 2;
     (*filho)->filhos[0] = filhos[MAX / 2 + 1];
     for (i = 0; i < MAX / 2; i++) {
+        no->chaves[i] = chaves[i];
+        no->filhos[i] = filhos[i];
+
         (*filho)->chaves[i] = chaves[MAX / 2 + i + 1];
-        (*filho)->filhos[i + 1] = filhos[MAX / 2 + i + 1];
+        (*filho)->filhos[i + 1] = filhos[MAX / 2 + i + 2];
     }
 
     // promove a chave do meio
