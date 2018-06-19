@@ -185,17 +185,20 @@ void deletaChave(NO_ARVOREB *no, int posicao) {
 }
 
 
-void merge(NO_ARVOREB *noEsquerda, NO_ARVOREB *noDireita, NO_ARVOREB *noPai, int posPai) {
+void merge(NO_ARVOREB *noEsquerda, NO_ARVOREB *noDireita, int chaveMeio) {
+    noEsquerda->chaves[noEsquerda->nchaves] = chaveMeio;
     for (int i=0; i<noDireita->nchaves; i++) {
-        insereChave(noEsquerda, noDireita->chaves[i], NULL);
+        noEsquerda->chaves[noEsquerda->nchaves + i + 1] = noDireita->chaves[i];
+        noEsquerda->filhos[noEsquerda->nchaves + i + 1] = noDireita->filhos[i];
     }
+    noEsquerda->filhos[noEsquerda->nchaves + noDireita->nchaves + 1] = noDireita->filhos[noDireita->nchaves];
+    noEsquerda->nchaves = noEsquerda->nchaves + noDireita->nchaves + 1;
     free(noDireita);
-    insereChave(noEsquerda, noPai->chaves[posPai], NULL);
-    deletaChave(noPai, posPai);
 }
 
 
 // remove o elemento da arvore B
+// https://medium.com/@vijinimallawaarachchi/all-you-need-to-know-about-deleting-keys-from-b-trees-9090f3334b5c
 bool remocao(NO_ARVOREB **no, int valor) {
     int posicao = 0;
     int posPai = 0;
@@ -226,9 +229,8 @@ bool remocao(NO_ARVOREB **no, int valor) {
     if (ehFolha && noAtual->nchaves > MIN) {
         deletaChave(noAtual, posicao);
     }
-
     // caso 2, eh folha e n == MIN
-    if (ehFolha && noAtual->nchaves == MIN) {
+    else if (ehFolha && noAtual->nchaves == MIN) {
         // verifica se existe vizinho a esquerda
         if (posPai > 0) {
             NO_ARVOREB *vizinhoEsquerda = noPai->filhos[posPai-1];
@@ -242,7 +244,9 @@ bool remocao(NO_ARVOREB **no, int valor) {
             } else {
                 // faz um merge
                 deletaChave(noAtual, posicao);
-                merge(vizinhoEsquerda, noAtual, noPai, posPai-1);
+                merge(vizinhoEsquerda, noAtual, noPai->chaves[posPai-1]);
+                // TODO eh uma chave interna, pode precisar de balanceamento
+                deletaChave(noPai, posPai);
             }
         }
         // verifica se existe vizinho a direita
@@ -258,13 +262,37 @@ bool remocao(NO_ARVOREB **no, int valor) {
             } else {
                 // faz um merge
                 deletaChave(noAtual, posicao);
-                merge(noAtual, vizinhoDireita, noPai, posPai);
+                merge(noAtual, vizinhoDireita, noPai->chaves[posPai]);
+                // TODO eh uma chave interna, pode precisar de balanceamento
+                deletaChave(noPai, posPai);
             }
         }
+    }
+    // caso 3, no interno
+    else if (!ehFolha) {
+        NO_ARVOREB *filhoEsquerdo = noAtual->filhos[posicao];
+        NO_ARVOREB *filhoDireito = noAtual->filhos[posicao+1];
 
+        // caso 3a
+        if (filhoEsquerdo->nchaves > MIN) {
+            int chaveImediatamenteAnterior = filhoEsquerdo->chaves[filhoEsquerdo->nchaves-1];
+            remocao(no, chaveImediatamenteAnterior);
+            noAtual->chaves[posicao] = chaveImediatamenteAnterior;
+        } else if (filhoDireito->nchaves > MIN) {
+            int chaveImediatamenteSeguinte = filhoDireito->chaves[0];
+            remocao(no, chaveImediatamenteSeguinte);
+            noAtual->chaves[posicao] = chaveImediatamenteSeguinte;
+        } else {
+            merge(filhoEsquerdo, filhoDireito, valor);
+            // TODO eh uma chave interna, pode precisar de balanceamento
+            remocao(no, valor);
+            //deletaChave(noAtual, posicao);
+            // merge k and z to y
+            //     Free memory of node z
+            //     Recursively delete k from y
+        }
 
     }
-
 
     return true;
 }
