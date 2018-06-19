@@ -11,14 +11,16 @@
 #define true 1
 #define false 0
 #define MAX 4
+#define MIN (MAX/2)
 
 typedef int bool;
 
 // estrutura de no da arvore B
+// permite mais filhos e chaves que o maximo estipulado para operacoes intermediarias entre insercao e remocao
 typedef struct no_arvoreB {
     int nchaves;
-    int chaves[MAX];
-    struct no_arvoreB *filhos[MAX + 1];
+    int chaves[MAX+1];
+    struct no_arvoreB *filhos[MAX + 2];
 } NO_ARVOREB;
 
 // retorna a posicao que o elemento esta na arvore ou que deve ser inserido
@@ -173,9 +175,98 @@ void insercao(NO_ARVOREB **no, int valor) {
     }
 }
 
+// delecao simples
+void deletaChave(NO_ARVOREB *no, int posicao) {
+    for (int i=posicao; i<no->nchaves; i++) {
+        no->chaves[i] = no->chaves[i+1];
+        no->filhos[i+1] = no->filhos[i+2];
+    }
+    no->nchaves--;
+}
+
+
+void merge(NO_ARVOREB *noEsquerda, NO_ARVOREB *noDireita, NO_ARVOREB *noPai, int posPai) {
+    for (int i=0; i<noDireita->nchaves; i++) {
+        insereChave(noEsquerda, noDireita->chaves[i], NULL);
+    }
+    free(noDireita);
+    insereChave(noEsquerda, noPai->chaves[posPai], NULL);
+    deletaChave(noPai, posPai);
+}
+
+
 // remove o elemento da arvore B
-bool remocao(int valor) {
-    return false;
+bool remocao(NO_ARVOREB **no, int valor) {
+    int posicao = 0;
+    int posPai = 0;
+    NO_ARVOREB *noAtual = *no;
+    NO_ARVOREB *noPai = NULL;
+
+    // procura o valor
+    while(noAtual != NULL) {
+        posicao = buscaBinaria(noAtual, valor);
+        if (noAtual->chaves[posicao] == valor) {
+            // encontrou
+            break;
+        } else {
+            noPai = noAtual;
+            posPai = posicao;
+            noAtual = noAtual->filhos[posicao];
+        }
+    }
+
+    // se noAtual eh null, nao encontrou a chave
+    if (noAtual == NULL)
+        return false;
+
+    // verifica se no é uma folha
+    bool ehFolha = noAtual->filhos[posicao] == NULL;
+
+    // caso 1, eh folha e n > MIN
+    if (ehFolha && noAtual->nchaves > MIN) {
+        deletaChave(noAtual, posicao);
+    }
+
+    // caso 2, eh folha e n == MIN
+    if (ehFolha && noAtual->nchaves == MIN) {
+        // verifica se existe vizinho a esquerda
+        if (posPai > 0) {
+            NO_ARVOREB *vizinhoEsquerda = noPai->filhos[posPai-1];
+
+            // verifica se ele pode emprestar uma chave
+            if (vizinhoEsquerda->nchaves > MIN) {
+                deletaChave(noAtual, posicao);
+                insereChave(noAtual, noPai->chaves[posPai-1], NULL);
+                noPai->chaves[posPai-1] = vizinhoEsquerda->chaves[vizinhoEsquerda->nchaves-1];
+                deletaChave(vizinhoEsquerda, vizinhoEsquerda->nchaves-1);
+            } else {
+                // faz um merge
+                deletaChave(noAtual, posicao);
+                merge(vizinhoEsquerda, noAtual, noPai, posPai-1);
+            }
+        }
+        // verifica se existe vizinho a direita
+        else if (posPai < MAX) {
+            NO_ARVOREB *vizinhoDireita = noPai->filhos[posPai+1];
+
+            // verifica se ele pode emprestar uma chave
+            if (vizinhoDireita->nchaves > MIN) {
+                deletaChave(noAtual, posicao);
+                insereChave(noAtual, noPai->chaves[posPai], NULL);
+                noPai->chaves[posPai] = vizinhoDireita->chaves[0];
+                deletaChave(vizinhoDireita, 0);
+            } else {
+                // faz um merge
+                deletaChave(noAtual, posicao);
+                merge(noAtual, vizinhoDireita, noPai, posPai);
+            }
+        }
+
+
+    }
+
+
+    return true;
 }
 
 // coloca em um arquivo saida.txt a arvore que existe no momento de sua execucao
@@ -212,8 +303,8 @@ void leEntrada(char *nomeEntrada) {
             printf("entrou no if da impressao \n");
             impressao(no, 0);
         } else if (strcmp(comando, "remove") == 0) {
-            //printf("remove \n");
-            //remocao(valor);
+            printf("remove \n");
+            remocao(&no, valor);
         } else if (strcmp(comando, "fim") == 0) {
             //printf("fim \n");
             //fim();
