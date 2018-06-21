@@ -10,8 +10,8 @@
 
 #define true 1
 #define false 0
-#define MAX 4
-#define MIN (MAX/2)
+#define MAX 3
+#define MIN (MAX-1)/2
 
 typedef int bool;
 
@@ -19,9 +19,11 @@ typedef int bool;
 // permite mais filhos e chaves que o maximo estipulado para operacoes intermediarias entre insercao e remocao
 typedef struct no_arvoreB {
     int nchaves;
-    int chaves[MAX+1];
+    int chaves[MAX + 1];
     struct no_arvoreB *filhos[MAX + 2];
 } NO_ARVOREB;
+
+NO_ARVOREB *criaArvoreB();
 
 // retorna a posicao que o elemento esta na arvore ou que deve ser inserido
 int buscaBinaria(NO_ARVOREB *no, int valor) {
@@ -56,7 +58,7 @@ void impressao(NO_ARVOREB *no, int nivel) {
     int i;
     for (i = 0; i < no->nchaves; i++) {
         impressao(no->filhos[i], nivel + 1);
-        for (int j=0; j<nivel; j++) {
+        for (int j = 0; j < nivel; j++) {
             printf("    ");
         }
         printf("%d \n", no->chaves[i]);
@@ -177,9 +179,9 @@ void insercao(NO_ARVOREB **no, int valor) {
 
 // delecao simples
 void deletaChave(NO_ARVOREB *no, int posicao) {
-    for (int i=posicao; i<no->nchaves; i++) {
-        no->chaves[i] = no->chaves[i+1];
-        no->filhos[i+1] = no->filhos[i+2];
+    for (int i = posicao; i < no->nchaves; i++) {
+        no->chaves[i] = no->chaves[i + 1];
+        no->filhos[i + 1] = no->filhos[i + 2];
     }
     no->nchaves--;
 }
@@ -188,7 +190,7 @@ void deletaChave(NO_ARVOREB *no, int posicao) {
 // faz um merge e retorna a nova posicao da chave do meio
 int merge(NO_ARVOREB *noEsquerda, NO_ARVOREB *noDireita, int chaveMeio) {
     noEsquerda->chaves[noEsquerda->nchaves] = chaveMeio;
-    for (int i=0; i<noDireita->nchaves; i++) {
+    for (int i = 0; i < noDireita->nchaves; i++) {
         noEsquerda->chaves[noEsquerda->nchaves + i + 1] = noDireita->chaves[i];
         noEsquerda->filhos[noEsquerda->nchaves + i + 1] = noDireita->filhos[i];
     }
@@ -205,17 +207,19 @@ void remocaoRec(NO_ARVOREB *no, int k) {
     bool ehFolha = no->filhos[0] == NULL;
 
     // caso 1, eh folha e n > MIN
-    if (ehFolha && no->nchaves > MIN && no->chaves[posicao] == k) {
-        deletaChave(no, posicao);
+    if (ehFolha) {
+        if (no->chaves[posicao] == k) {
+            deletaChave(no, posicao);
+        }
     } else {
         if (no->chaves[posicao] == k) {
             // caso2, é nó interno e k está no nó
             NO_ARVOREB *filho_esquerdo = no->filhos[posicao];
-            NO_ARVOREB *filho_direito = no->filhos[posicao];
+            NO_ARVOREB *filho_direito = no->filhos[posicao+1];
 
             if (filho_esquerdo->nchaves > MIN) {
                 // caso 2a - o filho predecessor tem mais que o mínimo de chave
-                int predecessor = filho_esquerdo->chaves[filho_esquerdo->nchaves -1];
+                int predecessor = filho_esquerdo->chaves[filho_esquerdo->nchaves - 1];
                 remocaoRec(filho_esquerdo, predecessor);
 
                 // substitui k pelo predecessor
@@ -232,6 +236,13 @@ void remocaoRec(NO_ARVOREB *no, int k) {
             } else {
                 //  caso 2c - necessario um merge
                 merge(filho_esquerdo, filho_direito, k);
+                for (int i = posicao + 1; i < no->nchaves; i++) {
+                    no->chaves[i - 1] = no->chaves[i];
+                    no->filhos[i] = no->filhos[i + 1];
+                }
+                no->filhos[no->nchaves] = NULL;
+                no->nchaves--;
+
                 remocaoRec(filho_esquerdo, k);
             }
         } else {
@@ -244,7 +255,7 @@ void remocaoRec(NO_ARVOREB *no, int k) {
                 NO_ARVOREB *direita = NULL;
 
                 if (posicao > 0) {
-                    esquerda = no->filhos[posicao-1];
+                    esquerda = no->filhos[posicao - 1];
                 }
                 if (posicao < MAX) {
                     direita = no->filhos[posicao + 1];
@@ -253,14 +264,14 @@ void remocaoRec(NO_ARVOREB *no, int k) {
                 if (esquerda != NULL && esquerda->nchaves > MIN) {
                     // desce uma chave do no para xci e sobe uma
                     int chave_desce = no->chaves[posicao - 1];
-                    int chave_sobe = esquerda->chaves[esquerda->nchaves-1];
+                    int chave_sobe = esquerda->chaves[esquerda->nchaves - 1];
                     NO_ARVOREB *filho_move = esquerda->filhos[esquerda->nchaves];
 
                     // desloca chaves  e filhos de xci para direita
-                    xci->filhos[xci->nchaves+1] = xci->filhos[xci->nchaves];
-                    for (int i=xci->nchaves; i>0; i--) {
-                        xci->chaves[i] = xci->chaves[i-1];
-                        xci->filhos[i] = xci->filhos[i-1];
+                    xci->filhos[xci->nchaves + 1] = xci->filhos[xci->nchaves];
+                    for (int i = xci->nchaves; i > 0; i--) {
+                        xci->chaves[i] = xci->chaves[i - 1];
+                        xci->filhos[i] = xci->filhos[i - 1];
                     }
                     xci->chaves[0] = chave_desce;
                     xci->filhos[0] = filho_move;
@@ -268,7 +279,7 @@ void remocaoRec(NO_ARVOREB *no, int k) {
 
                     // sobe a chave da esquerda
                     no->chaves[posicao - 1] = chave_sobe;
-                    esquerda->chaves[esquerda->nchaves-1] = 0;
+                    esquerda->chaves[esquerda->nchaves - 1] = 0;
                     esquerda->filhos[esquerda->nchaves] = NULL;
                     esquerda->nchaves--;
 
@@ -288,18 +299,34 @@ void remocaoRec(NO_ARVOREB *no, int k) {
                     no->chaves[posicao] = chave_sobe;
 
                     // desloca chaves da direita
-                    for (int i=0; i < direita->nchaves - 1; i++) {
-                        direita->chaves[i] = direita->chaves[i+1];
-                        direita->filhos[i] = direita->filhos[i+1];
+                    for (int i = 0; i < direita->nchaves - 1; i++) {
+                        direita->chaves[i] = direita->chaves[i + 1];
+                        direita->filhos[i] = direita->filhos[i + 1];
                     }
                     direita->filhos[direita->nchaves - 1] = direita->filhos[direita->nchaves];
                     direita->filhos[direita->nchaves] = NULL;
                     direita->nchaves--;
                 } else {
-                    /* b. If x:c i and both of x:c i ’s immediate siblings have t  1 keys, merge x:c i
-                    with one sibling, which involves moving a key from x down into the new
-                    merged node to become the median key for that node.*/
-                    merge(esquerda, xci, no->chaves[posicao-1]);
+                    // faz um merge
+                    if (esquerda != NULL) {
+                        merge(esquerda, xci, no->chaves[posicao - 1]);
+
+                        for (int i = posicao; i < no->nchaves; i++) {
+                            no->chaves[i - 1] = no->chaves[i];
+                            no->filhos[i] = no->filhos[i + 1];
+                        }
+                        no->filhos[no->nchaves] = NULL;
+                        no->nchaves--;
+                    } else {
+                        merge(xci, direita, no->chaves[posicao]);
+
+                        for (int i = posicao + 1; i < no->nchaves; i++) {
+                            no->chaves[i - 1] = no->chaves[i];
+                            no->filhos[i] = no->filhos[i + 1];
+                        }
+                        no->filhos[no->nchaves] = NULL;
+                        no->nchaves--;
+                    }
                 }
             }
 
@@ -309,105 +336,13 @@ void remocaoRec(NO_ARVOREB *no, int k) {
 }
 
 
-
 // remove o elemento da arvore B
-// https://medium.com/@vijinimallawaarachchi/all-you-need-to-know-about-deleting-keys-from-b-trees-9090f3334b5c
-bool remocao(NO_ARVOREB **no, int valor) {
-    int posicao = 0;
-    int posPai = 0;
-    NO_ARVOREB *noAtual = *no;
-    NO_ARVOREB *noPai = NULL;
+bool remocao(NO_ARVOREB **raiz, int valor) {
+    remocaoRec(*raiz, valor);
 
-    // procura o valor
-    while(noAtual != NULL) {
-        posicao = buscaBinaria(noAtual, valor);
-        if (noAtual->chaves[posicao] == valor) {
-            // encontrou
-            break;
-        } else {
-            noPai = noAtual;
-            posPai = posicao;
-            noAtual = noAtual->filhos[posicao];
-        }
+    if ((*raiz)->nchaves == 0) {
+        *raiz = (*raiz)->filhos[0];
     }
-
-    // se noAtual eh null, nao encontrou a chave
-    if (noAtual == NULL)
-        return false;
-
-    // verifica se no é uma folha
-    bool ehFolha = noAtual->filhos[posicao] == NULL;
-
-    // caso 1, eh folha e n > MIN
-    if (ehFolha && noAtual->nchaves > MIN) {
-        deletaChave(noAtual, posicao);
-    }
-    // caso 2, eh folha e n == MIN
-    else if (ehFolha && noAtual->nchaves == MIN) {
-        // verifica se existe vizinho a esquerda
-        if (posPai > 0) {
-            NO_ARVOREB *vizinhoEsquerda = noPai->filhos[posPai-1];
-
-            // verifica se ele pode emprestar uma chave
-            if (vizinhoEsquerda->nchaves > MIN) {
-                deletaChave(noAtual, posicao);
-                insereChave(noAtual, noPai->chaves[posPai-1], NULL);
-                noPai->chaves[posPai-1] = vizinhoEsquerda->chaves[vizinhoEsquerda->nchaves-1];
-                deletaChave(vizinhoEsquerda, vizinhoEsquerda->nchaves-1);
-            } else {
-                // faz um merge
-                deletaChave(noAtual, posicao);
-                merge(vizinhoEsquerda, noAtual, noPai->chaves[posPai-1]);
-                // TODO eh uma chave interna, pode precisar de balanceamento
-                deletaChave(noPai, posPai);
-            }
-        }
-        // verifica se existe vizinho a direita
-        else if (posPai < MAX) {
-            NO_ARVOREB *vizinhoDireita = noPai->filhos[posPai+1];
-
-            // verifica se ele pode emprestar uma chave
-            if (vizinhoDireita->nchaves > MIN) {
-                deletaChave(noAtual, posicao);
-                insereChave(noAtual, noPai->chaves[posPai], NULL);
-                noPai->chaves[posPai] = vizinhoDireita->chaves[0];
-                deletaChave(vizinhoDireita, 0);
-            } else {
-                // faz um merge
-                deletaChave(noAtual, posicao);
-                merge(noAtual, vizinhoDireita, noPai->chaves[posPai]);
-                // TODO eh uma chave interna, pode precisar de balanceamento
-                deletaChave(noPai, posPai);
-            }
-        }
-    }
-    // caso 3, no interno
-    else if (!ehFolha) {
-        NO_ARVOREB *filhoEsquerdo = noAtual->filhos[posicao];
-        NO_ARVOREB *filhoDireito = noAtual->filhos[posicao+1];
-
-        // caso 3a
-        if (filhoEsquerdo->nchaves > MIN) {
-            int chaveImediatamenteAnterior = filhoEsquerdo->chaves[filhoEsquerdo->nchaves-1];
-            remocao(no, chaveImediatamenteAnterior);
-            noAtual->chaves[posicao] = chaveImediatamenteAnterior;
-        } else if (filhoDireito->nchaves > MIN) {
-            int chaveImediatamenteSeguinte = filhoDireito->chaves[0];
-            remocao(no, chaveImediatamenteSeguinte);
-            noAtual->chaves[posicao] = chaveImediatamenteSeguinte;
-        } else {
-            merge(filhoEsquerdo, filhoDireito, valor);
-            // TODO eh uma chave interna, pode precisar de balanceamento
-            remocao(no, valor);
-            //deletaChave(noAtual, posicao);
-            // merge k and z to y
-            //     Free memory of node z
-            //     Recursively delete k from y
-        }
-
-    }
-
-    return true;
 }
 
 // coloca em um arquivo saida.txt a arvore que existe no momento de sua execucao
@@ -431,7 +366,7 @@ void leEntrada(char *nomeEntrada) {
     char comando[20];
     int valor;
 
-    NO_ARVOREB *no = (NO_ARVOREB *) malloc(sizeof(NO_ARVOREB));
+    NO_ARVOREB *no = criaArvoreB();
 
     while (fscanf(entrada, "%s %d", comando, &valor) != EOF) {
 
@@ -455,6 +390,18 @@ void leEntrada(char *nomeEntrada) {
     }
 
     fclose(entrada);
+}
+
+NO_ARVOREB *criaArvoreB() {
+    NO_ARVOREB *arvore = (NO_ARVOREB *) malloc(sizeof(NO_ARVOREB));
+
+    for (int i=0; i<MAX; i++) {
+        arvore->chaves[i] = 0;
+        arvore->filhos[i] = NULL;
+    }
+    arvore->filhos[MAX] = NULL;
+
+    return arvore;
 }
 
 int main(int argc, char **argv) {
