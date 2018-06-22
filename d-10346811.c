@@ -10,8 +10,9 @@
 
 #define true 1
 #define false 0
-#define MAX 3
-#define MIN (MAX-1)/2
+#define T 2
+#define MAX (2*T - 1)
+#define MIN (T - 1)
 
 typedef int bool;
 
@@ -19,11 +20,24 @@ typedef int bool;
 // permite mais filhos e chaves que o maximo estipulado para operacoes intermediarias entre insercao e remocao
 typedef struct no_arvoreB {
     int nchaves;
-    int chaves[MAX + 1];
-    struct no_arvoreB *filhos[MAX + 2];
+    int chaves[MAX];
+    struct no_arvoreB *filhos[MAX + 1];
 } NO_ARVOREB;
 
-NO_ARVOREB *criaArvoreB();
+
+NO_ARVOREB *allocateNode() {
+    NO_ARVOREB *node = (NO_ARVOREB *) malloc(sizeof(NO_ARVOREB));
+    node->nchaves = 0;
+
+    for (int i=0; i<MAX; i++) {
+        node->chaves[i] = 0;
+        node->filhos[i] = NULL;
+    }
+    node->filhos[MAX] = NULL;
+
+    return node;
+}
+
 
 // retorna a posicao que o elemento esta na arvore ou que deve ser inserido
 int buscaBinaria(NO_ARVOREB *no, int valor) {
@@ -50,7 +64,7 @@ int buscaBinaria(NO_ARVOREB *no, int valor) {
     return inicio;
 }
 
-// TODO ajustar pra retornar um array com as chaves em ordem pra usar na func fim
+
 void impressao(NO_ARVOREB *no, int nivel) {
     if (no == NULL) {
         return;
@@ -66,116 +80,71 @@ void impressao(NO_ARVOREB *no, int nivel) {
     impressao(no->filhos[no->nchaves], nivel + 1);
 }
 
-// insercao da chave (valor) dado que o no correto ja foi encontrado
-void insereChave(NO_ARVOREB *no, int valor, NO_ARVOREB *filho) {
-    int i = no->nchaves;
 
-    while (no->chaves[i - 1] > valor && i > 0) {
-        no->chaves[i] = no->chaves[i - 1];
-        no->filhos[i + 1] = no->filhos[i];
-        i--;
-    }
-    no->chaves[i] = valor;
-    no->filhos[i + 1] = filho;
-    no->nchaves++;
+bool isLeaf(NO_ARVOREB *no) {
+    return no->filhos[0] == NULL;
 }
 
 
-void split(NO_ARVOREB *no, int valor, int posicao, int *chavePromovida, NO_ARVOREB **filho) {
-    // grava todas chaves num array temporario pra facilitar o split
-    int chaves[MAX + 1];
-    NO_ARVOREB *filhos[MAX + 2];
-    int i;
+void bTreeSplitChild(NO_ARVOREB *x, int i) {
+    NO_ARVOREB *z = allocateNode();
+    NO_ARVOREB *y = x->filhos[i];
 
-    for (i = 0; i < posicao; i++) {
-        chaves[i] = no->chaves[i];
-        filhos[i] = no->filhos[i];
+    z->nchaves = MIN;
+    for  (int j=0; j<MIN; j++) {
+        z->chaves[j] = y->chaves[MIN+j+1];
+        z->filhos[j] = y->filhos[MIN+j+1];
     }
-    filhos[i] = no->filhos[i];
-    filhos[i + 1] = *filho;
-
-    chaves[posicao] = valor;
-    for (i = posicao; i < MAX; i++) {
-        chaves[i + 1] = no->chaves[i];
-        filhos[i + 2] = no->filhos[i + 1];
+    z->filhos[MIN] = y->filhos[MAX];
+    for (int j=x->nchaves; j>i; j--) {
+        x->chaves[j] = x->chaves[j-1];
+        x->filhos[j+1] = x->filhos[j];
     }
-
-    // limpa o no
-    no->nchaves = MAX / 2;
-    for (i = MAX / 2; i < MAX; i++) {
-        no->chaves[i] = 0;
-        no->filhos[i] = NULL;
-    }
-    no->filhos[MAX] = NULL;
-
-    // aloca o filho
-    *filho = malloc(sizeof(NO_ARVOREB));
-
-    // grava as chaves e os filhos nos nos corretos
-    no->filhos[MAX / 2] = filhos[MAX / 2];
-    (*filho)->nchaves = MAX / 2;
-    (*filho)->filhos[0] = filhos[MAX / 2 + 1];
-    for (i = 0; i < MAX / 2; i++) {
-        no->chaves[i] = chaves[i];
-        no->filhos[i] = filhos[i];
-
-        (*filho)->chaves[i] = chaves[MAX / 2 + i + 1];
-        (*filho)->filhos[i + 1] = filhos[MAX / 2 + i + 2];
-    }
-
-    // promove a chave do meio
-    *chavePromovida = chaves[MAX / 2];
+    x->filhos[i+1] = z;
+    x->chaves[i] = y->chaves[MIN];
+    x->nchaves++;
+    y->nchaves = MIN;
 }
 
 
-// encontra a posicao que a chave deve ser inserido
-// retorna true caso inseriu corretamente, false caso houve promocao
-bool insereRec(NO_ARVOREB *no, int valor, int *chavePromovida, NO_ARVOREB **filho) {
-    if (no == NULL) {
-        *chavePromovida = valor;
-        return false;
-    }
+void bTreeInsertNonfull(NO_ARVOREB *x, int k) {
+    int i=x->nchaves;
 
-    int posicao = buscaBinaria(no, valor);
-
-
-    bool inseriu = insereRec(no->filhos[posicao], valor, chavePromovida, filho);
-    if (inseriu) {
-        // chave já foi inserida
-        return true;
-    } else {
-        // chave foi promovida e deve ser inserida caso haja espaco ou fazer split caso contrario
-
-        if (no->nchaves < MAX) {
-            // existe espaco, entao insere
-            insereChave(no, *chavePromovida, *filho);
-            return true;
-        } else {
-            // nao ha espaco suficiente, necessario um split
-            split(no, *chavePromovida, posicao, chavePromovida, filho);
-            return false;
+    if (isLeaf(x)) {
+        while (i>0 && x->chaves[i-1] > k) {
+            x->chaves[i] = x->chaves[i-1];
+            i--;
         }
+        x->chaves[i] = k;
+        x->nchaves++;
+    } else {
+        i = buscaBinaria(x, k);
 
+        if (x->filhos[i]->nchaves == MAX) {
+            bTreeSplitChild(x, i);
+
+            if (k > x->chaves[i]) {
+                i++;
+            }
+        }
+        bTreeInsertNonfull(x->filhos[i], k);
     }
 }
 
-// cuida de promocoes
-void insercao(NO_ARVOREB **no, int valor) {
-    int chavePromovida = 0;
-    NO_ARVOREB *filho = NULL;
-    bool inseriu = insereRec(*no, valor, &chavePromovida, &filho);
 
-    // se nao inseriu, houve promocao
-    if (!inseriu) {
-        NO_ARVOREB *novaRaiz = malloc(sizeof(NO_ARVOREB));
-        novaRaiz->nchaves = 1;
-        novaRaiz->chaves[0] = chavePromovida;
-        novaRaiz->filhos[0] = *no;
-        novaRaiz->filhos[1] = filho;
+void bTreeInsert(NO_ARVOREB **raiz, int k) {
+    if ((*raiz)->nchaves == MAX) {
+        NO_ARVOREB *s = allocateNode();
+        s->filhos[0] = *raiz;
+        *raiz = s;
 
-        *no = novaRaiz;
+        bTreeSplitChild(s, 0);
+        bTreeInsertNonfull(s, k);
+    } else {
+        bTreeInsertNonfull(*raiz, k);
     }
 }
+
 
 // delecao simples
 void deletaChave(NO_ARVOREB *no, int posicao) {
@@ -200,11 +169,29 @@ int merge(NO_ARVOREB *noEsquerda, NO_ARVOREB *noDireita, int chaveMeio) {
 }
 
 
+int achaMaximo(NO_ARVOREB *no) {
+    if (isLeaf(no)) {
+        return no->chaves[no->nchaves-1];
+    } else {
+        return achaMaximo(no->filhos[no->nchaves]);
+    }
+}
+
+
+int achaMinimo(NO_ARVOREB *no) {
+    if (isLeaf(no)) {
+        return no->chaves[0];
+    } else {
+        return achaMinimo(no->filhos[0]);
+    }
+}
+
+
 void remocaoRec(NO_ARVOREB *no, int k) {
     int posicao = buscaBinaria(no, k);
 
     // verifica se no é uma folha
-    bool ehFolha = no->filhos[0] == NULL;
+    bool ehFolha = isLeaf(no);
 
     // caso 1, eh folha e n > MIN
     if (ehFolha) {
@@ -219,7 +206,7 @@ void remocaoRec(NO_ARVOREB *no, int k) {
 
             if (filho_esquerdo->nchaves > MIN) {
                 // caso 2a - o filho predecessor tem mais que o mínimo de chave
-                int predecessor = filho_esquerdo->chaves[filho_esquerdo->nchaves - 1];
+                int predecessor = achaMaximo(filho_esquerdo);
                 remocaoRec(filho_esquerdo, predecessor);
 
                 // substitui k pelo predecessor
@@ -227,8 +214,8 @@ void remocaoRec(NO_ARVOREB *no, int k) {
 
             } else if (filho_direito->nchaves > MIN) {
                 // caso 2b - filho sucessor tem mais que o mínimo de chave
-                int sucessor = filho_direito->chaves[0];
-                remocaoRec(filho_esquerdo, sucessor);
+                int sucessor = achaMinimo(filho_direito);
+                remocaoRec(filho_direito, sucessor);
 
                 // substitui k pelo predecessor
                 no->chaves[posicao] = sucessor;
@@ -317,6 +304,7 @@ void remocaoRec(NO_ARVOREB *no, int k) {
                         }
                         no->filhos[no->nchaves] = NULL;
                         no->nchaves--;
+                        xci = esquerda;
                     } else {
                         merge(xci, direita, no->chaves[posicao]);
 
@@ -345,63 +333,67 @@ bool remocao(NO_ARVOREB **raiz, int valor) {
     }
 }
 
+
+void impressaoArq(FILE *f, NO_ARVOREB *no, int nivel) {
+    if (no == NULL) {
+        return;
+    }
+    int i;
+    for (i = 0; i < no->nchaves; i++) {
+        impressaoArq(f, no->filhos[i], nivel + 1);
+        for (int j = 0; j < nivel; j++) {
+            fprintf(f, "    ");
+        }
+        fprintf(f, "%d \n", no->chaves[i]);
+    }
+    impressaoArq(f, no->filhos[no->nchaves], nivel + 1);
+}
+
+
 // coloca em um arquivo saida.txt a arvore que existe no momento de sua execucao
-void fim() {
-    return;
+void fim(NO_ARVOREB *no) {
+    FILE *f = fopen("saida.txt", "w");
+    if (f == NULL) {
+        printf("Erro ao abrir arquivo de saida.\n");
+        exit(1);
+    }
+    impressaoArq(f, no, 0);
+    fclose(f);
+    exit(0);
 }
 
 void leEntrada(char *nomeEntrada) {
-
-    printf("%s \n", nomeEntrada);
-
     FILE *entrada;
-
     entrada = fopen(nomeEntrada, "r");
+
     // verifica se existe conteudo no arquivo
     if (entrada == NULL) {
         printf("Arquivo invalido\n");
-        return;
+        exit(1);
     }
 
     char comando[20];
     int valor;
 
-    NO_ARVOREB *no = criaArvoreB();
+    NO_ARVOREB *no = allocateNode();
 
     while (fscanf(entrada, "%s %d", comando, &valor) != EOF) {
-
-        //printf("%s %d \n ", comando, valor);
-
         if (strcmp(comando, "insere") == 0) {
-            printf("entrou no if inserir\n");
-            insercao(&no, valor);
+            bTreeInsert(&no, valor);
         } else if (strcmp(comando, "imprime") == 0) {
-            printf("entrou no if da impressao \n");
+            printf("Arvore:\n");
             impressao(no, 0);
+            printf("\n");
         } else if (strcmp(comando, "remove") == 0) {
-            printf("remove \n");
             remocao(&no, valor);
         } else if (strcmp(comando, "fim") == 0) {
-            //printf("fim \n");
-            //fim();
+            fim(no);
         } else {
-            //printf("linha invalida \n");
+            printf("linha invalida \n");
         }
     }
 
     fclose(entrada);
-}
-
-NO_ARVOREB *criaArvoreB() {
-    NO_ARVOREB *arvore = (NO_ARVOREB *) malloc(sizeof(NO_ARVOREB));
-
-    for (int i=0; i<MAX; i++) {
-        arvore->chaves[i] = 0;
-        arvore->filhos[i] = NULL;
-    }
-    arvore->filhos[MAX] = NULL;
-
-    return arvore;
 }
 
 int main(int argc, char **argv) {

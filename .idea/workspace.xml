@@ -12,13 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="21f49094-bb9d-4c07-98fe-8d3cf4426273" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/insercao_teste1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/arvoreB.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/arvoreB.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/d-10346811.c" beforeDir="false" afterPath="$PROJECT_DIR$/d-10346811.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/entrada.txt" beforeDir="false" afterPath="$PROJECT_DIR$/entrada.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <ignored path="saida.txt" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,38 +29,41 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="d-10346811.c" pinned="false" current-in-tab="true">
+      <file leaf-file-name="d-10346811.c" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/d-10346811.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="55">
-              <caret line="59" column="16" lean-forward="true" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
+            <state relative-caret-position="286">
+              <caret line="354" column="35" selection-start-line="354" selection-start-column="35" selection-end-line="354" selection-end-column="35" />
+              <folding>
+                <element signature="e#146#164#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="370">
+              <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="entrada.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/entrada.txt">
+      <file leaf-file-name="saida.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/saida.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+            <state relative-caret-position="204">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="insercao_teste1.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/insercao_teste1.txt">
+      <file leaf-file-name="stdio.h" pinned="false" current-in-tab="false">
+        <entry file="file://C:/MinGW/include/stdio.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="18" column="9" lean-forward="true" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+            <state relative-caret-position="225">
+              <caret line="453" column="37" selection-start-line="453" selection-start-column="37" selection-end-line="453" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -93,6 +96,8 @@
       <find>executou</find>
       <find>leEntrada</find>
       <find>impre</find>
+      <find>malloc</find>
+      <find>achaMaximo</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -104,10 +109,10 @@
       <list>
         <option value="$PROJECT_DIR$/../algoritmoDePrim/d-10346811.c" />
         <option value="$USER_HOME$/Downloads/ep3.c" />
-        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/insercao_teste2.txt" />
         <option value="$PROJECT_DIR$/entrada.txt" />
         <option value="$PROJECT_DIR$/d-10346811.c" />
-        <option value="$PROJECT_DIR$/insercao_teste2.txt" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -120,11 +125,12 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-253" />
-    <option name="y" value="-4" />
-    <option name="width" value="1125" />
-    <option name="height" value="772" />
+    <option name="x" value="-10" />
+    <option name="y" value="-10" />
+    <option name="width" value="1939" />
+    <option name="height" value="1049" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -192,6 +198,8 @@
       <workItem from="1527792266300" duration="8747000" />
       <workItem from="1528852276671" duration="7116000" />
       <workItem from="1529186197611" duration="6654000" />
+      <workItem from="1529632932921" duration="6788000" />
+      <workItem from="1529637459975" duration="4197000" />
     </task>
     <task id="LOCAL-00001" summary="Inserção">
       <created>1528859539821</created>
@@ -204,29 +212,30 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41968000" />
+    <option name="totallyTimeSpent" value="52953000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-2" width="1920" height="1082" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49685535" visible="true" weight="0.13969426" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49460045" visible="true" weight="0.24586913" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32771337" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32621083" />
       <window_info anchor="bottom" id="CMake" order="11" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5002636" side_tool="true" weight="0.329718" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="10" visible="true" weight="0.32982087" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.77028453" />
-      <window_info id="Structure" order="1" sideWeight="0.5031447" side_tool="true" visible="true" weight="0.13969426" />
+      <window_info anchor="bottom" id="Version Control" order="10" visible="true" weight="0.34045583" />
+      <window_info anchor="bottom" x="0" y="0" width="1536" height="814" id="Run" order="2" weight="0.505698" />
+      <window_info id="Structure" order="1" sideWeight="0.5053996" side_tool="true" visible="true" weight="0.24586913" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49973643" weight="0.39831403" />
+      <window_info anchor="bottom" x="0" y="0" width="1536" height="814" id="Debug" order="3" sideWeight="0.49973643" weight="0.42307693" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Message" order="0" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,56 +276,86 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <condition expression="valor == 20" language="ObjectiveC" />
-          <url>file://$PROJECT_DIR$/d-10346811.c</url>
-          <line>81</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-      </breakpoints>
-      <option name="time" value="9" />
+      <option name="time" value="25" />
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="no-&gt;chaves" language="ObjectiveC" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>k==8</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>k==23</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>k==13</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>k==7</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>k == 7</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>k==5</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>k == 23</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>k ==</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>k == 1</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>valor == 20</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
+    </expressions>
+    <expressions id="watch">
       <expression>
-        <expression-string>valor == 15</expression-string>
+        <expression-string>no-&gt;chaves</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>valor == 55</expression-string>
+        <expression-string>MIN</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>valor == 66</expression-string>
+        <expression-string>MAX</expression-string>
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/entrada.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/d-10346811.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="413">
@@ -523,38 +562,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../algoritmoDePrim/d-10346811.c" />
     <entry file="file://$USER_HOME$/Downloads/ep3.c" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/insercao_teste2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/insercao_teste2.txt" />
     <entry file="file://$PROJECT_DIR$/insercao_teste1.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="9" lean-forward="true" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+        <state relative-caret-position="306">
+          <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/entrada.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+        <state relative-caret-position="220">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/MinGW/include/stdio.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="453" column="37" selection-start-line="453" selection-start-column="37" selection-end-line="453" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/d-10346811.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="59" column="16" lean-forward="true" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
+        <state relative-caret-position="286">
+          <caret line="354" column="35" selection-start-line="354" selection-start-column="35" selection-end-line="354" selection-end-column="35" />
+          <folding>
+            <element signature="e#146#164#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/saida.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
         </state>
       </provider>
     </entry>
